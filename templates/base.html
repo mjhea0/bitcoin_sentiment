@@ -3,7 +3,9 @@
   <head>
     <meta charset="utf-8">
     <title>Bitcoin Sentiment</title>
-    <link href="http://twitter.github.com/bootstrap/1.4.0/bootstrap.css" rel="stylesheet">
+    <link href="//twitter.github.com/bootstrap/1.4.0/bootstrap.css" rel="stylesheet">
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/flot/0.8/jquery.flot.min.js"></script>
     <!-- use some foundation goodness later -->
     <!-- <link href="http://cdn.jsdelivr.net/foundation/4.1.2/css/foundation.css" rel="stylesheet"> -->
     <style>.content {padding-top: 80px;}</style>
@@ -25,10 +27,79 @@
 
     <div class="container">
       <div class="content">
+        <div id="flot-me-hardy"></div>
         {% block page_header %}{% endblock %}
         {% block content %}{% endblock %}
       </div>
     </div>
     {% block js_footer %}{% endblock %}
   </body>
+  <script>
+
+    // every 2 mins, fetch messages from the mongos and display them
+    window.setInterval(function(){
+      $.getJSON("http://127.0.0.1:28017/bitcoin_sentiment/message/").success(function(data){
+        data.rows.forEach(function(obj) {
+          if (obj.new) {
+            $('.twitter').append("" +
+              "<div class='tweet'><h2>" + obj.msg_user + "</h2>" +
+              "<p>" + obj.msg_text + "</p><p>" + obj.created_at +
+              "</p></div>"
+            )
+          }
+        })
+      })
+    }, 120000);
+
+
+    // not terribly important for now
+    // // every 5 minutes plot graph of number of new messages
+    // // the following taken from flot's example page
+    // // minus the pirate talk
+    // var data = [];
+    // var alreadyFetched = {};
+
+    // $.plot(".flot-me-hardy", data, options);
+
+    // var iteration = 0;
+
+    // function fetchData() {
+
+    //     ++iteration;
+
+    //     function onDataReceived(series) {
+
+    //         // Load all the data in one pass; if we only got partial
+    //         // data we could merge it with what we already have.
+
+    //         data = [ series ];
+    //         $.plot(".flot-me-hardy", data, options);
+    //     }
+
+    //     // Normally we call the same URL - a script connected to a
+    //     // database - but in this case we only have static example
+    //     // files, so we need to modify the URL.
+
+    //     // would be worthwhile to memoize this data instead of fetching it twice
+    //     $.getJSON("http://127.0.0.1:28017/bitcoin_sentiment/message/").success(function(data){
+    //       data.rows.forEach(function(obj) {
+    //         d = new Date();
+    //         newMessageCount = 0;
+    //         if (obj.new) {
+    //           newMessageCount += 1;
+    //         }
+    //         onDataReceived([d.getTime(), newMessageCount])
+    //       })
+    //     })
+
+
+    //     if (iteration < 5) {
+    //         setTimeout(fetchData, 360000);
+    //     } else {
+    //         data = [];
+    //         alreadyFetched = {};
+    //     }
+    // }
+    // setInterval(fetchData, 360000); //update every 6 mins
+  </script>
 </html>

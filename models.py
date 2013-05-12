@@ -10,6 +10,7 @@ class Message(db.DynamicDocument):
     msg_id =  db.FloatField(required=True)
     msg_lang = db.StringField(max_length=255, required=True)
     msg_text = db.StringField(required=True)
+    new = db.BooleanField(required=True)
 
     def get_absolute_url(self):
         return url_for('post', kwargs={'slug': self.slug})

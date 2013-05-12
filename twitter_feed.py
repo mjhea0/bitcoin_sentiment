@@ -18,6 +18,7 @@ def fetch_sentiment(sites):
             sitesData.append(receivedData)
 
 def fetch_twitter_data():
+    mark_previous_data_as_old()
     fetch_sentiment(sites)
     for site in sitesData:
         for data in site['twitter']['results']:
@@ -36,12 +37,15 @@ def store_message(data):
         from_user_id = data['from_user_id'],
         msg_id = data['id'],
         msg_lang = data['iso_language_code'],
-        msg_text = data['text'],)
+        msg_text = data['text'],
+        new = True,)
     msg.save()
 
 def date_field_time(data):
     timestamp = strftime('%Y-%m-%d %H:%M:%S', strptime(data,'%a, %d %b %Y %H:%M:%S +0000'))
     return parser.parse(timestamp)
 
-
-fetch_twitter_data()
+def mark_previous_data_as_old():
+    for msg in models.Message.objects():
+        msg.new = False
+        msg.save()

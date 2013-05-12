@@ -2,10 +2,14 @@
 
 {% block content %}
     {% for message in messages %}
-      <h2>{{ message.msg_user }}</a></h2>
-      <p>{{ message.msg_text }}</p>
-      <p>
-        {{ message.created_at }}
-      </p>
+    <div class='twitter'>
+      <div class='tweet'>
+        <h2>{{ message.msg_user }}</h2>
+        <p>{{ message.msg_text }}</p>
+        <p>
+          {{ message.created_at }}
+        </p>
+      </div>
+    </div>
     {% endfor %}
 {% endblock %}
