@@ -1,14 +1,14 @@
 # Bitcoin Sentiment
-## bitcoin sentiment analysis
+### bitcoin sentiment analysis
 
-### How do you run it, you ask?
-pip -r install requirements.txt && \
-python manage.py runserver
+#### How do you run it, you ask?
+    pip -r install requirements.txt && \
+    python manage.py runserver
 
-### Why is the requirements.txt file so large?
+#### Why is the requirements.txt file so large?
 That's what she said. I forgot to use `--no-site-packages`, and this is me tinkering
 
-### TODO
+#### TODO
 - live update
 - add tests
 - add other sites
