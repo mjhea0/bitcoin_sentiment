@@ -9,6 +9,5 @@
 That's what she said. I forgot to use `--no-site-packages`, and this is me tinkering
 
 #### TODO
-- live update
 - add tests
 - add other sites
