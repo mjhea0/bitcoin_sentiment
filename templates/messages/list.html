@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block content %}
+    {% for message in messages %}
+      <h2>{{ message.msg_user }}</a></h2>
+      <p>{{ message.msg_text }}</p>
+      <p>
+        {{ message.created_at }}
+      </p>
+    {% endfor %}
+{% endblock %}
