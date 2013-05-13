@@ -1,6 +1,5 @@
 from flask import Flask
 from flask.ext.mongoengine import MongoEngine
-# from bitcoin_sentiment import twitter_feed
 import sched, time
 
 app = Flask(__name__)
@@ -20,6 +19,8 @@ def register_blueprints(app):
     app.register_blueprint(messages)
 
 def grab_twitter_data_repeatedly():
+    # well this is not so bright
+    from bitcoin_sentiment import twitter_feed
     s = sched.scheduler(time.time, time.sleep)
     # update every 5 minutes
     s.enter(300, 1, twitter_feed.fetch_twitter_data(), (s,))
